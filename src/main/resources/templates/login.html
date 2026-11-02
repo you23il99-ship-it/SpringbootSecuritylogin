@@ -17,95 +17,104 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #f8f9fb;
-            font-family: 'Noto Sans KR', sans-serif;
-            color: #202b38;
+            background: #f4f6f9;
+            font-family: Arial, sans-serif;
+            color: #222;
         }
 
         .login-container {
-            width: 100%;
-            max-width: 480px;
-            padding: 20px;
+            width: 400px;
+            padding: 45px 40px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
         }
 
-        .login-title {
+        .login-header {
             text-align: center;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
-        .login-box {
-            background: #ffffff;
-            padding: 40px;
-            border: 1px solid #e8ebef;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        .login-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
-        .input-group {
-            margin-bottom: 25px;
+        .login-header p {
+            font-size: 14px;
+            color: #888;
         }
 
-        .input-group label {
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
             display: block;
-            margin-bottom: 12px;
-            font-size: 15px;
+            margin-bottom: 9px;
+            font-size: 14px;
             font-weight: 600;
         }
 
-        .input-group input {
+        .form-group input {
             width: 100%;
-            height: 52px;
-            padding: 0 15px;
-            border: 1px solid #d5dbe3;
-            border-radius: 6px;
-            font-size: 15px;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 14px;
             outline: none;
             transition: border-color 0.2s;
         }
 
-        .input-group input:focus {
-            border-color: #26384d;
-        }
-
-        .input-group input::placeholder {
-            color: #a0aaba;
+        .form-group input:focus {
+            border-color: #3867e8;
         }
 
         .login-button {
             width: 100%;
-            height: 54px;
-            margin-top: 8px;
-            background: #202d3d;
-            color: white;
+            height: 50px;
+            margin-top: 10px;
             border: none;
-            border-radius: 6px;
-            font-size: 17px;
+            border-radius: 7px;
+            background: #3867e8;
+            color: white;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s;
         }
 
         .login-button:hover {
-            background: #34485f;
+            background: #2852c7;
         }
 
         .error-message {
-            margin-top: 25px;
+            margin-bottom: 18px;
+            padding: 11px;
+            border-radius: 6px;
+            background: #fff0f0;
+            color: #d93025;
+            font-size: 13px;
             text-align: center;
-            color: #dc5252;
-            font-size: 14px;
         }
 
-        @media (max-width: 480px) {
-            .login-box {
-                padding: 30px 22px;
-            }
+        .signup-link {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
 
-            .login-title {
-                font-size: 28px;
-            }
+        .signup-link a {
+            margin-left: 5px;
+            color: #3867e8;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -114,49 +123,48 @@
 
 <div class="login-container">
 
-    <h2 class="login-title">로그인</h2>
-
-    <div class="login-box">
-
-        <form th:action="@{/login}" method="post">
-
-            <!-- CSRF 토큰 -->
-            <input type="hidden"
-                   th:name="${_csrf.parameterName}"
-                   th:value="${_csrf.token}">
-
-            <div class="input-group">
-                <label for="username">아이디</label>
-                <input type="text"
-                       id="username"
-                       name="username"
-                       placeholder="아이디를 입력하세요"
-                       required
-                       maxlength="20">
-            </div>
-
-            <div class="input-group">
-                <label for="password">비밀번호</label>
-                <input type="password"
-                       id="password"
-                       name="password"
-                       placeholder="비밀번호를 입력하세요"
-                       required
-                       maxlength="72">
-            </div>
-
-            <button type="submit" class="login-button">
-                로그인
-            </button>
-
-        </form>
-
+    <div class="login-header">
+        <h2>로그인</h2>
+        <p>서비스 이용을 위해 로그인해 주세요.</p>
     </div>
 
-    <!-- 로그인 실패 시에만 표시 -->
-    <p class="error-message" th:if="${param.error}">
-        아이디 또는 비밀번호를 확인해주세요.
-    </p>
+    <form th:action="@{/login}" method="post">
+
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}">
+
+        <div th:if="${error}" class="error-message"
+             th:text="${error}"></div>
+
+        <div class="form-group">
+            <label for="username">아이디</label>
+            <input type="text"
+                   id="username"
+                   name="username"
+                   placeholder="아이디를 입력하세요"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password"
+                   id="password"
+                   name="password"
+                   placeholder="비밀번호를 입력하세요"
+                   required>
+        </div>
+
+        <button type="submit" class="login-button">
+            로그인
+        </button>
+
+    </form>
+
+    <div class="signup-link">
+        아직 회원이 아니신가요?
+        <a th:href="@{/signup}">회원가입</a>
+    </div>
 
 </div>
 

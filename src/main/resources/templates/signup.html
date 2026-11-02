@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f9fb;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #202b38;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+        }
+
+        .signup-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .signup-box {
+            background: #ffffff;
+            padding: 40px;
+            border: 1px solid #e8ebef;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            height: 52px;
+            padding: 0 15px;
+            border: 1px solid #d5dbe3;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #26384d;
+        }
+
+        .input-group input::placeholder {
+            color: #a0aaba;
+        }
+
+        .signup-button,
+        .login-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 54px;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .signup-button {
+            margin-top: 8px;
+            background: #202d3d;
+            color: white;
+            border: none;
+        }
+
+        .signup-button:hover {
+            background: #34485f;
+        }
+
+        .login-button {
+            margin-top: 12px;
+            background: white;
+            color: #202d3d;
+            border: 1px solid #cbd3dd;
+        }
+
+        .login-button:hover {
+            background: #f1f4f7;
+        }
+
+        .error-message {
+            margin-top: 20px;
+            text-align: center;
+            color: #dc5252;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .signup-box {
+                padding: 30px 22px;
+            }
+
+            .signup-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="signup-container">
+
+    <h2 class="signup-title">회원가입</h2>
+
+    <div class="signup-box">
+
+        <form th:action="@{/signup}" method="post">
+
+            <!-- CSRF 토큰 -->
+
+
+            <div class="input-group">
+                <label for="username">아이디</label>
+                <input type="text"
+                       id="username"
+                       name="username"
+                       placeholder="아이디를 입력하세요"
+                       required
+                       minlength="4"
+                       maxlength="20">
+            </div>
+
+            <div class="input-group">
+                <label for="password">비밀번호</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="비밀번호를 입력하세요"
+                       required
+                       minlength="8"
+                       maxlength="72">
+            </div>
+
+            <div class="input-group">
+                <label for="passwordConfirm">비밀번호 확인</label>
+                <input type="password"
+                       id="passwordConfirm"
+                       name="passwordConfirm"
+                       placeholder="비밀번호를 다시 입력하세요"
+                       required
+                       minlength="8"
+                       maxlength="72">
+            </div>
+
+            <button type="submit" class="signup-button">
+                회원가입
+            </button>
+
+        </form>
+
+        <a th:href="@{/login}" class="login-button">
+            로그인으로 돌아가기
+        </a>
+
+        <p class="error-message"
+           th:if="${error}"
+           th:text="${error}">
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

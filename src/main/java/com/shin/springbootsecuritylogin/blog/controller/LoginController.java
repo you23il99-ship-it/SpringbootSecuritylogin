@@ -30,6 +30,8 @@ public class LoginController {
         return "login";
     }
 
+
+
     @PostMapping("/login")
     public String login(
             @Valid @ModelAttribute LoginRequest request,
@@ -76,4 +78,5 @@ public class LoginController {
             return "login";
         }
     }
+
 }

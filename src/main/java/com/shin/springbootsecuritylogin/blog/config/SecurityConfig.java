@@ -19,29 +19,31 @@ public class SecurityConfig {
             throws Exception {
 
         http
-                // 접근 권한 설정
+                // CSRF 보호 유지
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**")
+                )
+
+                // H2 콘솔 iframe 접근 허용
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin())
+                )
+
+                // 페이지 접근 권한 설정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/", "/login",
-                                "/css/**", "/js/**",
-                                "/h2-console/**"
+                                "/login",
+                                "/signup",
+                                "/favicon.ico",
+                                "/h2-console/**",
+                                "/css/**",
+                                "/js/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
 
-                // 직접 작성한 LoginController에서 로그인 처리
-                .formLogin(form -> form.disable())
-
-                // 로그아웃 설정
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login")
-                        .permitAll()
-                )
-
-                // H2 콘솔 개발용 설정
-                .headers(headers -> headers
-                        .frameOptions(frame -> frame.sameOrigin())
-                );
+                // 사용자 정의 로그인 컨트롤러 사용
+                .formLogin(form -> form.disable());
 
         return http.build();
     }
@@ -55,7 +57,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration)
             throws Exception {
-
         return configuration.getAuthenticationManager();
     }
 
