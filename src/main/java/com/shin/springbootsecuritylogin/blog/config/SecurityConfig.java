@@ -1,9 +1,12 @@
 package com.shin.springbootsecuritylogin.blog.config;
 
+import com.shin.springbootsecuritylogin.blog.service.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,18 +51,35 @@ public class SecurityConfig {
         return http.build();
     }
 
+    // BCrypt 비밀번호 암호화
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // DB 회원 정보 조회 및 비밀번호 검증 담당
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration)
-            throws Exception {
-        return configuration.getAuthenticationManager();
+    public DaoAuthenticationProvider authenticationProvider(
+            CustomUserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(userDetailsService);
+
+        provider.setPasswordEncoder(passwordEncoder);
+
+        return provider;
     }
 
+    // 로그인 인증 관리자
+    @Bean
+    public AuthenticationManager authenticationManager(
+            DaoAuthenticationProvider authenticationProvider) {
+
+        return new ProviderManager(authenticationProvider);
+    }
+
+    // 로그인 인증 정보를 세션에 저장
     @Bean
     public SecurityContextRepository securityContextRepository() {
         return new HttpSessionSecurityContextRepository();
