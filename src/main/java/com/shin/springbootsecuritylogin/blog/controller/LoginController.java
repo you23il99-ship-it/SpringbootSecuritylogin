@@ -56,8 +56,12 @@ public class LoginController {
                                     request.getPassword()
                             )
                     );
+            // 3. 세션 고정 공격 방어
+            if (httpRequest.getSession(false) != null) {
+                httpRequest.changeSessionId();
+            }
 
-            // 3. 인증 정보 저장
+            // 4. 인증 정보 저장
             SecurityContext context =
                     SecurityContextHolder.createEmptyContext();
 
@@ -71,6 +75,9 @@ public class LoginController {
             return "redirect:/";
 
         } catch (AuthenticationException e) {
+
+            // 로그인 실패 시 인증 정보 초기화
+            SecurityContextHolder.clearContext();
 
             model.addAttribute("error",
                     "아이디 또는 비밀번호가 올바르지 않습니다.");
