@@ -3,46 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인</title>
+    <title>로그인 | BLOG</title>
 
     <style>
+        :root {
+            --background: #F5F6F8;
+            --surface: #FFFFFF;
+            --text-primary: #172033;
+            --text-secondary: #667085;
+            --accent: #3157D5;
+            --accent-hover: #2446B8;
+            --border: #E3E7ED;
+            --error: #D92D20;
+            --radius: 16px;
+        }
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
         body {
+            margin: 0;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: #f4f6f9;
-            font-family: Arial, sans-serif;
-            color: #222;
+            justify-content: center;
+            padding: 24px;
+            background: var(--background);
+            color: var(--text-primary);
+            font-family: Pretendard, -apple-system,
+            BlinkMacSystemFont, "Segoe UI",
+            sans-serif;
         }
 
         .login-container {
-            width: 400px;
-            padding: 45px 40px;
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            width: 100%;
+            max-width: 420px;
         }
 
-        .login-header {
+        .brand {
+            margin-bottom: 28px;
             text-align: center;
-            margin-bottom: 35px;
         }
 
-        .login-header h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
+        .brand-name {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
 
-        .login-header p {
+        .brand-name span {
+            color: var(--accent);
+        }
+
+        .brand-description {
+            margin-top: 9px;
+            color: var(--text-secondary);
             font-size: 14px;
-            color: #888;
+        }
+
+        .login-card {
+            padding: 40px 36px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 12px 35px rgba(23, 32, 51, 0.06);
+        }
+
+        .login-title {
+            margin: 0;
+            font-size: 25px;
+            font-weight: 750;
+            letter-spacing: -1px;
+        }
+
+        .login-subtitle {
+            margin: 10px 0 30px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         .form-group {
@@ -52,69 +91,108 @@
         .form-group label {
             display: block;
             margin-bottom: 9px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 650;
         }
 
         .form-group input {
             width: 100%;
             height: 48px;
             padding: 0 14px;
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            font-size: 14px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
             outline: none;
-            transition: border-color 0.2s;
+            background: #FFFFFF;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input::placeholder {
+            color: #A0A7B4;
         }
 
         .form-group input:focus {
-            border-color: #3867e8;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(49, 87, 213, 0.12);
+        }
+
+        .error-message {
+            margin-bottom: 20px;
+            padding: 12px 14px;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            background: #FEF2F2;
+            color: var(--error);
+            font-size: 13px;
+            line-height: 1.5;
         }
 
         .login-button {
             width: 100%;
-            height: 50px;
-            margin-top: 10px;
+            height: 49px;
+            margin-top: 5px;
             border: none;
-            border-radius: 7px;
-            background: #3867e8;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 9px;
+            background: var(--accent);
+            color: #FFFFFF;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.2s;
         }
 
         .login-button:hover {
-            background: #2852c7;
+            background: var(--accent-hover);
         }
 
-        .error-message {
-            margin-bottom: 18px;
-            padding: 11px;
-            border-radius: 6px;
-            background: #fff0f0;
-            color: #d93025;
-            font-size: 13px;
+        .login-button:active {
+            transform: scale(0.99);
+        }
+
+        .signup-area {
+            margin-top: 26px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
             text-align: center;
+            color: var(--text-secondary);
+            font-size: 13px;
         }
 
         .signup-link {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 14px;
-            color: #888;
-        }
-
-        .signup-link a {
             margin-left: 5px;
-            color: #3867e8;
-            font-weight: 600;
+            color: var(--accent);
+            font-weight: 700;
             text-decoration: none;
         }
 
-        .signup-link a:hover {
+        .signup-link:hover {
             text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 25px;
+            color: #98A0AE;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 18px;
+            }
+
+            .login-card {
+                padding: 32px 24px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -123,48 +201,73 @@
 
 <div class="login-container">
 
-    <div class="login-header">
-        <h2>로그인</h2>
-        <p>서비스 이용을 위해 로그인해 주세요.</p>
-    </div>
+    <header class="brand">
+        <div class="brand-name">MY<span>BLOG</span></div>
+        <div class="brand-description">
+            생각과 이야기를 나누는 공간
+        </div>
+    </header>
 
-    <form th:action="@{/login}" method="post">
+    <main class="login-card">
 
-        <input type="hidden"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}">
+        <h1 class="login-title">로그인</h1>
 
-        <div th:if="${error}" class="error-message"
-             th:text="${error}"></div>
+        <p class="login-subtitle">
+            계정에 로그인하고<br>
+            나만의 블로그를 시작해 보세요.
+        </p>
 
-        <div class="form-group">
-            <label for="username">아이디</label>
-            <input type="text"
-                   id="username"
-                   name="username"
-                   placeholder="아이디를 입력하세요"
-                   required>
+        <form th:action="@{/login}" method="post">
+
+            <!-- CSRF 토큰 유지 -->
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+
+            <div class="form-group">
+                <label for="username">아이디</label>
+                <input type="text"
+                       id="username"
+                       name="username"
+                       placeholder="아이디를 입력하세요"
+                       autocomplete="username"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="비밀번호를 입력하세요"
+                       autocomplete="current-password"
+                       required>
+            </div>
+
+            <!-- 기존 로그인 오류 메시지 유지 -->
+            <div class="error-message"
+                 th:if="${error}"
+                 th:text="${error}">
+            </div>
+
+            <button type="submit" class="login-button">
+                로그인
+            </button>
+
+        </form>
+
+        <div class="signup-area">
+            아직 회원이 아니신가요?
+            <a th:href="@{/signup}" class="signup-link">
+                회원가입
+            </a>
         </div>
 
-        <div class="form-group">
-            <label for="password">비밀번호</label>
-            <input type="password"
-                   id="password"
-                   name="password"
-                   placeholder="비밀번호를 입력하세요"
-                   required>
-        </div>
+    </main>
 
-        <button type="submit" class="login-button">
-            로그인
-        </button>
-
-    </form>
-
-    <div class="signup-link">
-        아직 회원이 아니신가요?
-        <a th:href="@{/signup}">회원가입</a>
-    </div>
+    <footer class="footer">
+        © 2026 MYBLOG. All rights reserved.
+    </footer>
 
 </div>
 

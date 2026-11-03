@@ -2,17 +2,233 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>메인 화면</title>
-</head>
-<body>
-<h1>로그인 성공!</h1>
-<p>Spring Boot 보안 로그인에 성공했습니다.</p>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈 | MYBLOG</title>
 
-<form th:action="@{/logout}" method="post">
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}">
-    <button type="submit">로그아웃</button>
-</form>
+    <style>
+        :root {
+            --background: #F5F6F8;
+            --surface: #FFFFFF;
+            --text-primary: #172033;
+            --text-secondary: #667085;
+            --accent: #3157D5;
+            --accent-hover: #2446B8;
+            --border: #E3E7ED;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--text-primary);
+            font-family: Pretendard, -apple-system,
+            BlinkMacSystemFont, "Segoe UI",
+            sans-serif;
+        }
+
+        /* 상단 네비게이션 */
+        .navbar {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8%;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .nav-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        /* 메인 영역 */
+        .main-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 0 24px;
+        }
+
+        .welcome-card {
+            padding: 65px 40px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(23, 32, 51, 0.05);
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 66px;
+            height: 66px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            background: #EAF0FF;
+            color: var(--accent);
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .welcome-title {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -1.2px;
+        }
+
+        .welcome-description {
+            margin-top: 16px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .status-label {
+            display: inline-block;
+            margin-top: 28px;
+            padding: 9px 16px;
+            border-radius: 30px;
+            background: #EAF0FF;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* 로그아웃 */
+        .logout-form {
+            margin-top: 35px;
+        }
+
+        .logout-button {
+            min-width: 150px;
+            height: 48px;
+            padding: 0 24px;
+            border: none;
+            border-radius: 9px;
+            background: var(--accent);
+            color: #FFFFFF;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .logout-button:hover {
+            background: var(--accent-hover);
+        }
+
+        .logout-button:active {
+            transform: scale(0.98);
+        }
+
+        /* 하단 */
+        .footer {
+            margin-top: 60px;
+            color: #98A0AE;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                height: 65px;
+                padding: 0 22px;
+            }
+
+            .main-container {
+                margin: 45px auto;
+                padding: 0 18px;
+            }
+
+            .welcome-card {
+                padding: 50px 22px;
+            }
+
+            .welcome-title {
+                font-size: 25px;
+            }
+
+            .welcome-description {
+                font-size: 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="brand">MY<span>BLOG</span></div>
+    <div class="nav-label">나만의 블로그 공간</div>
+</header>
+
+<main class="main-container">
+
+    <section class="welcome-card">
+
+        <div class="success-icon">✓</div>
+
+        <h1 class="welcome-title">
+            로그인 성공!
+        </h1>
+
+        <p class="welcome-description">
+            Spring Boot 보안 로그인에 성공했습니다.<br>
+            MYBLOG에 오신 것을 환영합니다.
+        </p>
+
+        <div class="status-label">
+            ● AUTHENTICATED
+        </div>
+
+        <form th:action="@{/logout}"
+              method="post"
+              class="logout-form">
+
+            <!-- 기존 CSRF 토큰 유지 -->
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+
+            <button type="submit" class="logout-button">
+                로그아웃
+            </button>
+
+        </form>
+
+    </section>
+
+    <footer class="footer">
+        © 2026 MYBLOG. All rights reserved.
+    </footer>
+
+</main>
+
 </body>
 </html>
